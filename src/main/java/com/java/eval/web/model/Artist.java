@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -11,32 +12,33 @@ import java.util.Set;
 @Table(name="artist")
 public class Artist {
 
-    @OneToMany(mappedBy = "artist")
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties("artist")
-    private Set<Album> albums = new HashSet();
+    private List<Album> albums;
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer artistId;
+    @Column(name = "id")
+    private Integer id;
 
+    @Column(name = "name")
     private String name;
 
     public Artist(){
-
     }
 
-    public Artist(HashSet<Album> albums, String name){
+    public Artist(List<Album> albums, String name){
         this.albums=albums;
         this.name=name;
     }
 
     public Integer getId() {
-        return artistId;
+        return id;
     }
 
-    public void setId(Integer artistId) {
-        this.artistId = artistId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -47,11 +49,11 @@ public class Artist {
         this.name = name;
     }
 
-    public Set<Album> getAlbums() {
+    public List<Album> getAlbums() {
         return albums;
     }
 
-    public void setAlbums(Set<Album> albums) {
+    public void setAlbums(List<Album> albums) {
         this.albums = albums;
     }
 
@@ -60,20 +62,20 @@ public class Artist {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Artist artist = (Artist) o;
-        return artistId == artist.artistId &&
+        return Objects.equals(albums, artist.albums) &&
+                Objects.equals(id, artist.id) &&
                 Objects.equals(name, artist.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(artistId, name);
+        return Objects.hash(albums, id, name);
     }
 
     @Override
     public String toString() {
-        return "Artiste{" +
-                ", artistId=" + artistId +
-                ", name='" + name + '\'' +
+        return "Artist{" +
+                "name='" + name + '\'' +
                 '}';
     }
 }

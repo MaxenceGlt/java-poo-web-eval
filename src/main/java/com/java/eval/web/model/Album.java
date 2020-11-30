@@ -8,13 +8,15 @@ import java.util.Objects;
 public class Album {
 
     @ManyToOne
-    @JoinColumn(name = "ArtistId")
+    @JoinColumn(name = "artistId")
     private Artist artist;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer albumId;
+    @Column(name = "id")
+    private Integer id;
 
+    @Column(name = "title")
     private String title;
 
     public Album(){
@@ -25,27 +27,28 @@ public class Album {
         this.title=title;
     }
 
-    public Artist getArtiste() {
+
+    public Artist getArtist() {
         return artist;
     }
 
-    public void setArtiste(Artist artist) {
+    public void setArtist(Artist artist) {
         this.artist = artist;
     }
 
     public Integer getId() {
-        return albumId;
+        return id;
     }
 
     public void setId(Integer id) {
-        this.albumId = id;
+        this.id = id;
     }
 
-    public String getNomArtiste() {
+    public String getTitle() {
         return title;
     }
 
-    public void setNomArtiste(String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
@@ -55,21 +58,19 @@ public class Album {
         if (o == null || getClass() != o.getClass()) return false;
         Album album = (Album) o;
         return Objects.equals(artist, album.artist) &&
-                Objects.equals(albumId, album.albumId) &&
+                Objects.equals(id, album.id) &&
                 Objects.equals(title, album.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(artist, albumId, title);
+        return Objects.hash(artist, id, title);
     }
 
     @Override
     public String toString() {
         return "Album{" +
-                "artist=" + artist.getName() +
-                ", albumId=" + albumId +
-                ", title='" + title + '\'' +
+                "title='" + title + '\'' +
                 '}';
     }
 }
