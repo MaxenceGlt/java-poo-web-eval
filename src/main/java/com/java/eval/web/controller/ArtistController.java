@@ -107,7 +107,6 @@ public class ArtistController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteArtist (@PathVariable("id") Integer id) {
         artistRepository.deleteById(id);
-        albumRepository.deleteByArtistId(id);
     }
 
 
