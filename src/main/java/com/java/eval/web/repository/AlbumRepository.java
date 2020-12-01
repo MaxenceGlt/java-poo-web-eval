@@ -10,7 +10,4 @@ import java.util.List;
 public interface AlbumRepository extends PagingAndSortingRepository<Album,Integer> {
 
     Album findByTitle(String title);
-    List<Album> deleteByArtistId(Integer idArtist);
-
-
-}
+    }
